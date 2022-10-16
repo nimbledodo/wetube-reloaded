@@ -50,7 +50,9 @@ export const postLogin = async (req, res) => {
       errorMessage: "Wrong password",
     });
   }
-  res.end();
+  req.session.loggedIn = true;
+  req.session.user = user;
+  res.redirect("/");
 };
 export const edit = (req, res) => res.send("Edit User");
 export const remove = (req, res) => res.send("Delete User");
