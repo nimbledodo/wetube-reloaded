@@ -1,3 +1,5 @@
+//sudo mongod --dbpath ~/data/db : Mongo DB 시작위한 명령어
+
 import mongoose from "mongoose";
 
 mongoose.connect("mongodb://127.0.0.1:27017/wetube");
