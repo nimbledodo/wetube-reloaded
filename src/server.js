@@ -19,10 +19,13 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   session({
-    secret: "Hello!",
-    resave: true,
-    saveUninitialized: true,
-    store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/wetube" }),
+    secret: process.env.COOKIE_SECRET,
+    resave: false, // resave와 saveUninitialized를 false로 하면 로그인 한 사용자에게만 쿠키를 준다.
+    saveUninitialized: false,
+    // cookie: {
+    //   maxAge: 20000, // in msec
+    // },
+    store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
   })
 );
 app.use(localsMiddleware); //localsMiddleware는 session이 정의되고 난 후에 use해야 함
