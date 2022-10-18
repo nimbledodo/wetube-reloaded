@@ -13,8 +13,12 @@ html(lang="ko")
                     if loggedIn
                         li 
                             a(href="/logout") Log Out
-                        li 
-                            a(href="/profile") #{loggedInUser.name}'s Profile
+                        if loggedInUser.name
+                            li 
+                                a(href="/profile") #{loggedInUser.name}'s Profile
+                        else 
+                            li 
+                                a(href="/profile") #{loggedInUser.username}'s Profile               
                     if !loggedIn
                         li 
                             a(href="/join") Join
