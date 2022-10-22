@@ -137,13 +137,36 @@ export const postEdit = async (req, res) => {
     },
     body: { name, email, username, location },
   } = req;
-  await User.findByIdAndUpdate(_id, {
-    name,
-    email,
-    username,
-    location,
-  });
-  return res.render("edit-profile");
+  const updatedUser = await User.findByIdAndUpdate(
+    _id,
+    {
+      name,
+      email,
+      username,
+      location,
+    },
+    { new: true }
+  );
+  req.session.user = updatedUser;
+  // req.session.user = {
+  //   ...req.session.user, /// previous value 나머지 모두
+  //   name,
+  //   email,
+  //   username,
+  //   location,
+  // };
+  return res.redirect("/users/edit");
+};
+
+export const getChangePassword = (req, res) => {
+  if (req.session.user.socialOnly === true) {
+    return res.redirect("/");
+  }
+  return res.render("change-password", { pageTitle: "Change Password" });
+};
+export const postChangePassword = (req, res) => {
+  //send notification
+  return res.redirect("/");
 };
 
 export const remove = (req, res) => res.send("Delete User");
@@ -151,4 +174,5 @@ export const logout = (req, res) => {
   req.session.destroy();
   return res.redirect("/");
 };
+
 export const see = (req, res) => res.send("See");
