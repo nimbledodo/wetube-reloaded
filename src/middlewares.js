@@ -1,3 +1,4 @@
+import multer from "multer";
 export const localsMiddleware = (req, res, next) => {
   // pug에서는 local에 있는 정보만 읽을 수 있기 때문에 middleware를 만들어줌
   res.locals.loggedIn = Boolean(req.session.loggedIn);
@@ -21,3 +22,5 @@ export const publicOnlyMiddleware = (req, res, next) => {
     return res.redirect("/");
   }
 }; //login하지 않은 사람만 갈 수 있는 페이지
+
+export const uploadFiles = multer({ dest: "uploads/" });

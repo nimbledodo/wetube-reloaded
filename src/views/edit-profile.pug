@@ -2,7 +2,9 @@ extends base
 
 block content 
     h4 Edit Profile
-    form(method="POST")
+    form(method="POST", enctype="multipart/form-data")
+        lable(for="avatar") Avatar
+        input(type="file", id="avatar", name="avatar",accept = "image/*")
         input(placeholder="Email",name="email", type="email", required, value=loggedInUser.email)  
         input(placeholder="Username",name="username", type="text", required, value=loggedInUser.username)    
         input(placeholder="Name",name="name", type="text", required, value=loggedInUser.name)  
