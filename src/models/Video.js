@@ -10,6 +10,7 @@ const videoSchema = new mongoose.Schema({
     views: { type: Number, default: 0, required: true },
     rating: { type: Number, default: 0, required: true },
   },
+  owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
 });
 //Date.now()가 아니라 Date.now 인점을 주의할 것! Date.now()하면 schema가 정의되는 순간 실행됨
 
