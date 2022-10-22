@@ -20,14 +20,13 @@ export const home = async (req, res) => {
 
 export const watch = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id);
-  const owner = await User.findById(video.owner);
+  const video = await Video.findById(id).populate("owner"); // owner object 전체를 가져다가 채워준다
   if (!video) {
     //check if video is null
     return res.status(404).render("404", { pageTitle: "Video not found." });
     //without return, javascript will execute the following code as well
   }
-  return res.render("watch", { pageTitle: video.title, video, owner });
+  return res.render("watch", { pageTitle: video.title, video });
 };
 
 export const getEdit = async (req, res) => {
