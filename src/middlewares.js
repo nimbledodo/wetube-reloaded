@@ -23,4 +23,13 @@ export const publicOnlyMiddleware = (req, res, next) => {
   }
 }; //login하지 않은 사람만 갈 수 있는 페이지
 
-export const uploadFiles = multer({ dest: "uploads/" });
+export const avartarUpload = multer({
+  dest: "uploads/avatars/",
+  limits: { fileSize: 3000000 },
+});
+export const videoUpload = multer({
+  dest: "uploads/videos/",
+  limits: {
+    fileSize: 10000000,
+  },
+});
