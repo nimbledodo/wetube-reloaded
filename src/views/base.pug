@@ -20,7 +20,9 @@ html(lang="ko")
                                 a(href="/profile") #{loggedInUser.name}'s Profile
                         else 
                             li 
-                                a(href="/profile") #{loggedInUser.username}'s Profile               
+                                a(href="/profile") #{loggedInUser.username}'s Profile 
+                        li 
+                        a(href="/videos/upload") Upload Video              
                     if !loggedIn
                         li 
                             a(href="/join") Join
@@ -28,8 +30,7 @@ html(lang="ko")
                             a(href="/login") Login
                     li 
                         a(href="/search") Search
-                    li 
-                        a(href="/videos/upload") Upload Video
+                    
 
         main
             block content
