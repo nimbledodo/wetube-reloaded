@@ -29,6 +29,7 @@ app.use(
   })
 );
 app.use(localsMiddleware); //localsMiddleware는 session이 정의되고 난 후에 use해야 함
+app.use("/uploads", express.static("uploads")); //폴더 전체를 browser에서 접근할 수 있도록 해줌
 app.use("/", rootRouter);
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);
