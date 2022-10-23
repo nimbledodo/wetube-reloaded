@@ -9,9 +9,11 @@ module.exports = {
     }),
   ],
   mode: "development",
+  watch: true, //이렇게 하면 매번 npm run assets를 다시 시작하지 않아도 됨
   output: {
     filename: "js/main.js",
     path: path.resolve(__dirname, "assets"),
+    clean: true, // 이렇게 하면 지난 것을 지우고 다시 만듬
   },
   module: {
     rules: [
