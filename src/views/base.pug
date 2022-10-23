@@ -2,41 +2,14 @@ doctype html
 html(lang="ko")
     head
         title #{pageTitle} | Wetube
-        link(rel="stylesheet" href="https://unpkg.com/mvp.css") 
+        linkr(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css")
         link(rel="stylesheet" href="/assets/css/styles.css")
     body 
-        header 
-            h1=pageTitle 
-            nav 
-                ul 
-                    li 
-                        a(href="/") Home
-                    if loggedIn
-                        li 
-                            a(href="/videos/upload") Upload Video
-                        li 
-                            a(href=`/users/${loggedInUser._id}`) My Profile
-                        li 
-                            a(href="/users/edit") Edit Profile
-                        if loggedInUser.name
-                            li 
-                                a(href="/profile") #{loggedInUser.name}'s Profile
-                        else 
-                            li 
-                                a(href="/profile") #{loggedInUser.username}'s Profile   
-                        li 
-                            a(href="/users/logout") Log Out
-                    if !loggedIn
-                        li 
-                            a(href="/join") Join
-                        li 
-                            a(href="/login") Login
-                    li 
-                        a(href="/search") Search
-                    
-
+        include partials/header
         main
             block content
-    include partials/footer
+        include partials/footer
     script(src="/assets/js/main.js")
-//- // 위 방법으로 js 파일을 pug에 넣을 수 있다. for frontend
+    script(src="https://kit.fontawesome.com/3294494ea5.js" crossorigin="anonymous")
+//- 위 방법으로 js 파일을 pug에 넣을 수 있다. for frontend
+//- 아래 줄은 font awesome 사용을 위한 것
