@@ -4,7 +4,8 @@
   "description": "The best to way to watch a video",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node src/init.js"
+    "dev": "nodemon --exec babel-node src/init.js",
+    "assets": "webpack --config webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,9 @@
     "@babel/core": "^7.19.3",
     "@babel/node": "^7.19.1",
     "@babel/preset-env": "^7.19.4",
-    "nodemon": "^2.0.20"
+    "babel-loader": "^8.2.5",
+    "nodemon": "^2.0.20",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
   }
 }
