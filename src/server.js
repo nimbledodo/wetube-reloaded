@@ -1,6 +1,7 @@
 //sudo mongod --dbpath ~/data/db : Mongo DB 시작위한 명령어
 
 import express from "express";
+import flash from "express-flash";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import morgan from "morgan";
@@ -36,6 +37,7 @@ app.use(
     store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
   })
 );
+app.use(flash()); //after session
 app.use(localsMiddleware); //localsMiddleware는 session이 정의되고 난 후에 use해야 함
 app.use("/assets", express.static("assets")); //앞의 것은 url, 뒤의 것은 folder 이름
 app.use("/uploads", express.static("uploads")); //폴더 전체를 browser에서 접근할 수 있도록 해줌

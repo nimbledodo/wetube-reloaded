@@ -42,6 +42,7 @@ export const getEdit = async (req, res) => {
   }
   if (String(video.owner) !== String(_id)) {
     //type이 다르기 때문에 String으로 만들어서 비교함
+    req.flash("error", "Not authorized");
     return res.status(403).redirect("/");
   }
   return res.render("edit", { pageTitle: video.title, video });
@@ -61,6 +62,7 @@ export const postEdit = async (req, res) => {
   }
   if (String(video.owner) !== String(_id)) {
     //type이 다르기 때문에 String으로 만들어서 비교함
+    req.flash("error", "Not authorized");
     return res.status(403).redirect("/");
   }
   await Video.findByIdAndUpdate(id, {
@@ -114,6 +116,7 @@ export const deleteVideo = async (req, res) => {
   }
   if (String(video.owner) !== String(_id)) {
     //type이 다르기 때문에 String으로 만들어서 비교함
+    req.flash("error", "Not authorized");
     return res.status(403).redirect("/");
   }
   await Video.findByIdAndDelete(id);
