@@ -168,5 +168,5 @@ export const createComment = async (req, res) => {
   });
   video.comments.push(comment._id);
   video.save();
-  return res.sendStatus(201); //201: created a new ressource
+  return res.sendStatus(201).json({ newCommentId: comment._id }); //201: created a new ressource
 };
