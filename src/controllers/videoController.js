@@ -1,6 +1,7 @@
 import express from "express";
 import Video from "../models/Video";
 import User from "../models/User";
+import Comment from "../models/Comment";
 
 // export const home = (req, res) => {
 //   Video.find({}, (error, videos) => {
@@ -22,7 +23,8 @@ export const home = async (req, res) => {
 
 export const watch = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id).populate("owner"); // owner object 전체를 가져다가 채워준다
+  const video = await Video.findById(id).populate("owner").populate("comments");
+  // owner object 전체를 가져다가 채워준다
   if (!video) {
     //check if video is null
     return res.status(404).render("404", { pageTitle: "Video not found." });
@@ -148,6 +150,23 @@ export const registerView = async (req, res) => {
 };
 
 export const createComment = async (req, res) => {
-  console.log(req.body);
-  return res.end();
+  const {
+    session: { user },
+    body: { text },
+    params: { id },
+  } = req;
+
+  const video = await Video.findById(id);
+
+  if (!video) {
+    return res.sendStatus(404); // send the status and kill the request
+  }
+  const comment = await Comment.create({
+    text,
+    owner: user._id,
+    video: id,
+  });
+  video.comments.push(comment._id);
+  video.save();
+  return res.sendStatus(201); //201: created a new ressource
 };

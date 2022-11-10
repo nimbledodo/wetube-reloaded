@@ -14,6 +14,7 @@ const handleCommentSubmit = async (e) => {
     body: JSON.stringify({ text: text }),
   });
   textarea.value = "";
+  window.location.reload();
 };
 
 form.addEventListener("submit", handleCommentSubmit);
