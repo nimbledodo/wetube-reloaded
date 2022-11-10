@@ -6,6 +6,7 @@ import "dotenv/config"; //이렇게하면 하나만 적어도 된다. 단, .env 
 import "./db"; // importing db.js file
 import "./models/Video";
 import "./models/User";
+import "./models/Comment";
 import app from "./server";
 
 const PORT = 4000;
