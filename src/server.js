@@ -25,6 +25,8 @@ app.use((req, res, next) => {
 
 app.use(logger);
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); // to make backend understands json.
+// We need to explicitly set in the header the data type
 
 app.use(
   session({
