@@ -14,8 +14,6 @@ module.exports = {
       filename: "css/styles.css",
     }),
   ],
-  mode: "development",
-  watch: true, //이렇게 하면 매번 npm run assets를 다시 시작하지 않아도 됨
   output: {
     filename: "js/[name].js",
     path: path.resolve(__dirname, "assets"),

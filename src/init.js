@@ -1,3 +1,4 @@
+import "regenerator-runtime";
 import "dotenv/config"; //이렇게하면 하나만 적어도 된다. 단, .env 파일을 src 밖에 넣어야 한다는 점을 기억할 것!
 // require("dotenv").config();
 //require("dotenv").dconfig()
