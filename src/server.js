@@ -1,8 +1,8 @@
 //sudo mongod --dbpath ~/data/db : Mongo DB 시작위한 명령어
 
 import express from "express";
-import flash from "express-flash";
 import session from "express-session";
+import flash from "express-flash";
 import MongoStore from "connect-mongo";
 import morgan from "morgan";
 import { localsMiddleware } from "./middlewares";
