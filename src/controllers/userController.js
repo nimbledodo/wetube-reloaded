@@ -3,6 +3,8 @@ import bcrypt from "bcrypt";
 import fetch from "node-fetch";
 import User from "../models/User";
 
+const isHeroku = process.env.NODE_ENV === "production";
+
 export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
 export const postJoin = async (req, res) => {
   const { name, username, email, password, password2, location } = req.body;
@@ -141,7 +143,7 @@ export const postEdit = async (req, res) => {
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
-      avatarUrl: file ? file.location : avatarUrl, //파일이 있으면 path update 아니면 기존 avatarUrl 사용
+      avatarUrl: file ? (isHeroku ? file.location : file.path) : avatarUrl, //파일이 있으면 path update 아니면 기존 avatarUrl 사용
       name,
       email,
       username,
