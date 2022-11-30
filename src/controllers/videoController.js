@@ -3,6 +3,8 @@ import Video from "../models/Video";
 import User from "../models/User";
 import Comment from "../models/Comment";
 
+const isHeroku = process.env.NODE_ENV === "production";
+
 // export const home = (req, res) => {
 //   Video.find({}, (error, videos) => {
 //     console.log("erros", error);
