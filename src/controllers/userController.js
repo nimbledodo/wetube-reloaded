@@ -202,6 +202,7 @@ export const logout = (req, res) => {
   req.session.loggedIn = false;
   req.session.user = null;
   req.flash("info", "bye bye");
+  req.session.destroy();
   return res.redirect("/");
 };
 
