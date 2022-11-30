@@ -17,6 +17,7 @@ export const home = async (req, res) => {
     const videos = await Video.find({})
       .sort({ createdAt: "desc" })
       .populate("owner");
+    // console.log(videos);
     return res.render("home", { pageTitle: "Home", videos });
   } catch (error) {
     return res.render("server-error");
@@ -46,7 +47,7 @@ export const getEdit = async (req, res) => {
   }
   if (String(video.owner) !== String(_id)) {
     //type이 다르기 때문에 String으로 만들어서 비교함
-    req.flash("error", "Not authorized");
+    req.flash("error", "Not authorized (Owner does not match)");
     return res.status(403).redirect("/");
   }
   return res.render("edit", { pageTitle: video.title, video });
@@ -58,7 +59,7 @@ export const postEdit = async (req, res) => {
     user: { _id },
   } = req.session;
   const { title, description, hashtags } = req.body;
-  const video = await Video.exists({ _id: id });
+  const video = await Video.findById(id);
   // lowercase video: video object in my database
   // uppercase Video: video model
   if (!video) {
@@ -66,7 +67,8 @@ export const postEdit = async (req, res) => {
   }
   if (String(video.owner) !== String(_id)) {
     //type이 다르기 때문에 String으로 만들어서 비교함
-    req.flash("error", "Not authorized");
+    console.log("video owner", video.owner, "user", _id);
+    req.flash("error", "Not authorized (Owner does not match)");
     return res.status(403).redirect("/");
   }
   await Video.findByIdAndUpdate(id, {
@@ -120,7 +122,7 @@ export const deleteVideo = async (req, res) => {
   }
   if (String(video.owner) !== String(_id)) {
     //type이 다르기 때문에 String으로 만들어서 비교함
-    req.flash("error", "Not authorized");
+    req.flash("error", "Not authorized (Owner does not match)");
     return res.status(403).redirect("/");
   }
   await Video.findByIdAndDelete(id);

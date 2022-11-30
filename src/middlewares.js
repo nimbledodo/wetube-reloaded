@@ -33,10 +33,11 @@ export const localsMiddleware = (req, res, next) => {
 };
 
 export const protectorMiddleware = (req, res, next) => {
+  console.log(req.session.loggedIn);
   if (req.session.loggedIn) {
     next();
   } else {
-    req.flash("error", "Not authorized");
+    req.flash("error", "Not authorized (Logged in only)");
     return res.redirect("/login");
   }
 }; //login한 사람만 갈 수 있는 페이지 설정
@@ -45,7 +46,7 @@ export const publicOnlyMiddleware = (req, res, next) => {
   if (!req.session.loggedIn) {
     next();
   } else {
-    req.flash("error", "Not authorized");
+    req.flash("error", "Not authorizedBy (Logged out only)");
     return res.redirect("/");
   }
 }; //login하지 않은 사람만 갈 수 있는 페이지
