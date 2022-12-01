@@ -21,7 +21,7 @@ const videoSchema = new mongoose.Schema({
 videoSchema.static("formatHashtags", function (hashtags) {
   return hashtags
     .split(",")
-    .map((word) => (word.startsWith("#") ? word : `#${word}`));
+    .map((word) => (word.startsWith("#") ? word : `#${word.trim()}`));
 });
 
 const Video = mongoose.model("Video", videoSchema);

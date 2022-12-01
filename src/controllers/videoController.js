@@ -33,6 +33,7 @@ export const watch = async (req, res) => {
     return res.status(404).render("404", { pageTitle: "Video not found." });
     //without return, javascript will execute the following code as well
   }
+  console.log(video.hashtags);
   return res.render("watch", { pageTitle: video.title, video });
 };
 
@@ -142,6 +143,23 @@ export const search = async (req, res) => {
   return res.render("search", { pageTitle: "Search", videos });
 };
 
+export const tagSearch = async (req, res) => {
+  const keyword = `#${req.params.id}`;
+  let videos = [];
+  if (keyword) {
+    videos = await Video.find({
+      hashtags: {
+        $regex: new RegExp(keyword, "i"),
+      },
+    }).populate("owner");
+  }
+  return res.render("home", {
+    pageTitle: `${keyword} search`,
+    videos,
+    description: `Videos tagged ${keyword}`,
+  });
+};
+
 export const registerView = async (req, res) => {
   const { id } = req.params;
   const video = await Video.findById(id);
@@ -171,6 +189,26 @@ export const createComment = async (req, res) => {
     video: id,
   });
   video.comments.push(comment._id);
-  video.save();
-  return res.sendStatus(201).json({ newCommentId: comment._id }); //201: created a new ressource
+  await video.save();
+  return await res.status(201).json({ newCommentId: comment._id }); //201: created a new ressource
+};
+
+export const removeComment = async (req, res) => {
+  const {
+    session: { user },
+    params: { id },
+  } = req;
+
+  console.log(id, user);
+  const comment = await Comment.findById(id);
+  if (!comment) {
+    return res.sendStatus(404); // send the status and kill the request
+  }
+  console.log(comment.owner);
+  if (String(user._id) !== String(comment.owner)) {
+    req.flash("error", "Not authorized (Owner does not match)");
+    return res.sendStatus(403); // send the status and kill the request
+  }
+  await Comment.findByIdAndDelete(id);
+  return res.sendStatus(200);
 };

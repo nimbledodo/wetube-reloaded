@@ -5,7 +5,7 @@ import {
   getLogin,
   postLogin,
 } from "../controllers/userController.js";
-import { home, search } from "../controllers/videoController.js";
+import { home, search, tagSearch } from "../controllers/videoController.js";
 import { protectorMiddleware, publicOnlyMiddleware } from "../middlewares";
 
 const rootRouter = express.Router();
@@ -20,5 +20,6 @@ rootRouter
   .get(getLogin)
   .post(postLogin);
 rootRouter.get("/search", search);
+rootRouter.get("/tag/:id/search", tagSearch);
 
 export default rootRouter;

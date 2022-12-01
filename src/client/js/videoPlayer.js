@@ -100,6 +100,9 @@ const handleMouseLeave = (event) => {
 
 const handleEnded = (event) => {
   const { id } = videoContainer.dataset;
+  video.pause();
+  playBtnIcon.classList = "fas fa-play";
+  video.currentTime = 0;
   fetch(`/api/videos/${id}/view`, {
     method: "POST",
   });
