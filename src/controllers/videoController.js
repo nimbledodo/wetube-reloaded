@@ -33,7 +33,7 @@ export const watch = async (req, res) => {
     return res.status(404).render("404", { pageTitle: "Video not found." });
     //without return, javascript will execute the following code as well
   }
-  console.log(video.hashtags);
+  // console.log(video.hashtags);
   return res.render("watch", { pageTitle: video.title, video });
 };
 
@@ -68,7 +68,7 @@ export const postEdit = async (req, res) => {
   }
   if (String(video.owner) !== String(_id)) {
     //type이 다르기 때문에 String으로 만들어서 비교함
-    console.log("video owner", video.owner, "user", _id);
+    // console.log("video owner", video.owner, "user", _id);
     req.flash("error", "Not authorized (Owner does not match)");
     return res.status(403).redirect("/");
   }
@@ -199,12 +199,12 @@ export const removeComment = async (req, res) => {
     params: { id },
   } = req;
 
-  console.log(id, user);
+  // console.log(id, user);
   const comment = await Comment.findById(id);
   if (!comment) {
     return res.sendStatus(404); // send the status and kill the request
   }
-  console.log(comment.owner);
+  // console.log(comment.owner);
   if (String(user._id) !== String(comment.owner)) {
     req.flash("error", "Not authorized (Owner does not match)");
     return res.sendStatus(403); // send the status and kill the request

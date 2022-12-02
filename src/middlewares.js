@@ -9,9 +9,7 @@ const s3 = new aws.S3({
   },
 });
 
-const isHeroku = process.env.NODE_ENV === "production";
-console.log("NODE_ENV: ", process.env.NODE_ENV);
-// console.log("isHeroku: ", isHeroku);
+const isProduction = process.env.NODE_ENV === "production";
 
 const s3ImageUploader = multerS3({
   s3: s3,
@@ -30,12 +28,12 @@ export const localsMiddleware = (req, res, next) => {
   res.locals.loggedIn = Boolean(req.session.loggedIn);
   res.locals.siteName = "Wetube";
   res.locals.loggedInUser = req.session.user || {}; //{}는 loggedIn user가 없을 때 사용하기 위함
-  res.locals.isHeroku = isHeroku;
+  res.locals.isProduction = isProduction;
   next();
 };
 
 export const protectorMiddleware = (req, res, next) => {
-  console.log(req.session.loggedIn);
+  // console.log(req.session.loggedIn);
   if (req.session.loggedIn) {
     next();
   } else {
@@ -54,14 +52,14 @@ export const publicOnlyMiddleware = (req, res, next) => {
 }; //login하지 않은 사람만 갈 수 있는 페이지
 
 export const avartarUpload = multer({
-  dest: !isHeroku ? "uploads/avatars/" : undefined,
+  dest: !isProduction ? "uploads/avatars/" : undefined,
   limits: { fileSize: 3000000 },
-  storage: isHeroku ? s3ImageUploader : undefined,
+  storage: isProduction ? s3ImageUploader : undefined,
 });
 export const videoUpload = multer({
-  dest: !isHeroku ? "uploads/videos/" : undefined,
+  dest: !isProduction ? "uploads/videos/" : undefined,
   limits: {
     fileSize: 10000000,
   },
-  storage: isHeroku ? s3VideoUploader : undefined,
+  storage: isProduction ? s3VideoUploader : undefined,
 });
