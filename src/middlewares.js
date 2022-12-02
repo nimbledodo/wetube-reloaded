@@ -10,6 +10,8 @@ const s3 = new aws.S3({
 });
 
 const isHeroku = process.env.NODE_ENV === "production";
+console.log("NODE_ENV: ", process.env.NODE_ENV);
+// console.log("isHeroku: ", isHeroku);
 
 const s3ImageUploader = multerS3({
   s3: s3,
@@ -52,12 +54,12 @@ export const publicOnlyMiddleware = (req, res, next) => {
 }; //login하지 않은 사람만 갈 수 있는 페이지
 
 export const avartarUpload = multer({
-  dest: "uploads/avatars/",
+  dest: !isHeroku ? "uploads/avatars/" : undefined,
   limits: { fileSize: 3000000 },
   storage: isHeroku ? s3ImageUploader : undefined,
 });
 export const videoUpload = multer({
-  dest: "uploads/videos/",
+  dest: !isHeroku ? "uploads/videos/" : undefined,
   limits: {
     fileSize: 10000000,
   },
